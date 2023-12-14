@@ -45,7 +45,7 @@ void my_timer_callback(struct timer_list *unused)
 	struct current_time time_now = time_now_func();
 	
 	write_to_file(time_now);
-	printk(KERN_INFO "Timer Handler called. Current time: %d:%d\n", time_now.hours, time_now.minutes);
+	printk(KERN_INFO "Timer Handler called. Current time: %02d:%02d\n", time_now.hours, time_now.minutes);
 	//перезапуск таймера на время g_time_interval
 	mod_timer(&my_timer, jiffies + msecs_to_jiffies(g_time_interval));
 }
@@ -59,7 +59,7 @@ static int __init my_init(void)
 		printk(KERN_ERR "Failed to open file %s\n", my_file_path);
 		return 1;
 	}
-	printk(KERN_INFO "My module inserted into kernel!!!. Current time: %d:%d\n", time_now.hours, time_now.minutes);
+	printk(KERN_INFO "My module inserted into kernel!!!. Current time: %02d:%02d\n", time_now.hours, time_now.minutes);
 	write_to_file(time_now);
 	timer_setup(&my_timer, my_timer_callback, 0);
 	mod_timer( &my_timer, jiffies + msecs_to_jiffies(g_time_interval));
@@ -73,7 +73,7 @@ static void __exit my_exit(void)
 
 	filp_close(file, NULL);
 	del_timer(&my_timer);
-	printk(KERN_INFO "My module exited from kernel!!! Current time: %d:%d\n", time_now.hours, time_now.minutes);
+	printk(KERN_INFO "My module exited from kernel!!! Current time: %02d:%02d\n", time_now.hours, time_now.minutes);
 }
 
 module_init(my_init);
