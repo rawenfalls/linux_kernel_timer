@@ -1,0 +1,1 @@
+cmd_/home/zaqmond/Desktop/time/test.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/zaqmond/Desktop/time/test.ko /home/zaqmond/Desktop/time/test.o /home/zaqmond/Desktop/time/test.mod.o;  true
