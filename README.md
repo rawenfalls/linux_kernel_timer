@@ -21,7 +21,7 @@ sudo rmmod my_time_kernel.ko
 ```
 ### Поиск добавленного модуля ядра
 ```
-sudo lsmod | grep my_time_kernel.ko
+sudo lsmod | grep my_time_kernel
 ```
 ### Посмотреть вывод модуля
 ```
