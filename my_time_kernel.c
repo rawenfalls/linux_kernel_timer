@@ -12,7 +12,7 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Your Name");
 MODULE_DESCRIPTION("Your module description");
 
-int g_time_interval = 59300;
+int g_time_interval = 60000;
 struct timer_list my_timer;
 static char my_file_path[] = "/tmp/current_time";
 
@@ -34,9 +34,10 @@ struct current_time time_now_func(void){
 }
 
 void write_to_file(struct current_time time_now){
-	char str[5];
-	sprintf(str, "%d:%d", time_now.hours, time_now.minutes);
-	kernel_write(file, str, 5, &file->f_pos);
+	char str[7];
+	sprintf(str, "%02d:%02d\n", time_now.hours, time_now.minutes);
+	
+	kernel_write(file, str, strlen(str), &file->f_pos);
 }
 
 void my_timer_callback(struct timer_list *unused)
@@ -56,7 +57,7 @@ static int __init my_init(void)
 	file= filp_open(my_file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (IS_ERR(file)) {
 		printk(KERN_ERR "Failed to open file %s\n", my_file_path);
-		return;
+		return 1;
 	}
 	printk(KERN_INFO "My module inserted into kernel!!!. Current time: %d:%d\n", time_now.hours, time_now.minutes);
 	write_to_file(time_now);
